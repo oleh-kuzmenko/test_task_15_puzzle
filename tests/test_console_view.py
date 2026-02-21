@@ -1,13 +1,26 @@
+import textwrap
+
 from sliding_puzzle.console_view import ConsoleView
 
 def test_draw_board(capsys):
     view = ConsoleView(max_tile=8)
     board = [1,2,3,4,5,6,7,8,0]
+
     view.draw_board(board)
+
     captured = capsys.readouterr().out
-    assert "1" in captured
-    assert "8" in captured
-    assert "0" not in captured
+
+    expected = textwrap.dedent("""\
+                                ----------------
+                                |  1 |  2 |  3 |
+                                ----------------
+                                |  4 |  5 |  6 |
+                                ----------------
+                                |  7 |  8 |    |
+                                ----------------
+                                """)
+
+    assert captured == expected
 
 def test_get_move_valid(monkeypatch):
     inputs = iter(["5"])
